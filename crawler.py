@@ -47,8 +47,12 @@ def driver_start():
 
 def crawl(driver, keyword):
     driver.get("https://www.instagram.com/explore/tags/" + keyword)
-    WebDriverWait(driver, 30).until(EC.presence_of_element_located(
-        (By.XPATH, "/html/body/div[1]/section/main/header/div[1]/div/div/img")))
+    try:
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located(
+            (By.XPATH, "/html/body/div[1]/section/main/header/div[1]/div/div/img")))
+    except selenium.common.exceptions.TimeoutException:
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located(
+            (By.XPATH, "/html/body/div[1]/section/main/div/div/h2")))
     time.sleep(2)
     html = driver.page_source
     soup = BeautifulSoup(html, features="html.parser")
