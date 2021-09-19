@@ -149,11 +149,13 @@ def slow_crawl(driver, timer):
     except selenium.common.exceptions.TimeoutException:
         with open("time-out" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
-        slow_crawl(driver, timer)
+        next_driver = driver_start()
+        slow_crawl(next_driver, timer)
     except selenium.common.exceptions.NoSuchElementException:
         with open("no-such-element" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
-        slow_crawl(driver, timer)
+        next_driver = driver_start()
+        slow_crawl(next_driver, timer)
 
 
 def fast_crawl(driver, timer):
@@ -166,11 +168,13 @@ def fast_crawl(driver, timer):
     except selenium.common.exceptions.TimeoutException:
         with open("time-out" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
-        fast_crawl(driver, timer)
+        next_driver = driver_start()
+        fast_crawl(next_driver, timer)
     except selenium.common.exceptions.NoSuchElementException:
         with open("no-such-element" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
-        fast_crawl(driver, timer)
+        next_driver = driver_start()
+        fast_crawl(next_driver, timer)
 
 
 def main():
