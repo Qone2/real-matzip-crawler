@@ -174,20 +174,20 @@ def fast_crawl(driver, timer):
 
 
 def main():
-    driver = driver_start()
-    driver1 = driver_start()
-
-    threading.Thread(target=fast_crawl, args=(driver, 2)).start()
-    time.sleep(600)
-    threading.Thread(target=slow_crawl, args=(driver1, 3600)).start()
-
-
-if __name__ == "__main__":
     try:
-        main()
+        driver = driver_start()
+        driver1 = driver_start()
+
+        threading.Thread(target=fast_crawl, args=(driver, 2)).start()
+        time.sleep(600)
+        threading.Thread(target=slow_crawl, args=(driver1, 3600)).start()
     except selenium.common.exceptions.TimeoutException:
         with open("time-out" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
     except selenium.common.exceptions.NoSuchElementException:
         with open("no-such-element" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
+
+
+if __name__ == "__main__":
+    main()
