@@ -207,4 +207,5 @@ chromedriver.exe
 secret.json
 
 # logfile
-*.txt
+time-out*.txt
+no-such-element*.txt
