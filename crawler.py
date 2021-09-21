@@ -20,6 +20,7 @@ chrome_option.add_argument("headless")
 chrome_option.add_argument("window-size=1440x820")
 # chrome_option.add_argument("disable-gpu")
 chrome_option.add_argument('user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36')
+id_counter = [0]
 
 
 def driver_start():
@@ -31,7 +32,7 @@ def driver_start():
     driver.implicitly_wait(30)
     with open("./secret.json", 'r') as f:
         secrets = json.load(f)
-        user_id = secrets["insta_id"]
+        user_id = secrets["insta_id" + str(id_counter[0] % 3)]
         user_pw = secrets["insta_pw"]
 
     driver.get("https://www.instagram.com/")
@@ -149,11 +150,13 @@ def slow_crawl(driver, timer):
     except selenium.common.exceptions.TimeoutException:
         with open("time-out" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
+        id_counter[0] += 1
         next_driver = driver_start()
         slow_crawl(next_driver, timer)
     except selenium.common.exceptions.NoSuchElementException:
         with open("no-such-element" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
+        id_counter[0] += 1
         next_driver = driver_start()
         slow_crawl(next_driver, timer)
 
@@ -168,11 +171,13 @@ def fast_crawl(driver, timer):
     except selenium.common.exceptions.TimeoutException:
         with open("time-out" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
+        id_counter[0] += 1
         next_driver = driver_start()
         fast_crawl(next_driver, timer)
     except selenium.common.exceptions.NoSuchElementException:
         with open("no-such-element" + str(datetime.datetime.now()) + ".txt", 'w') as f:
             f.write(format_exc())
+        id_counter[0] += 1
         next_driver = driver_start()
         fast_crawl(next_driver, timer)
 
