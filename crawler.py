@@ -187,7 +187,7 @@ def main():
     driver1 = driver_start()
 
     threading.Thread(target=fast_crawl, args=(driver, 2)).start()
-    time.sleep(600)
+    time.sleep(60)
     threading.Thread(target=slow_crawl, args=(driver1, 3600)).start()
 
 
